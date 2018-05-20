@@ -24,17 +24,25 @@ class UFC(tk.Tk):
 		
 		tk.Tk.wm_title(self, 'Solo de chitara')
 		
-		container = tk.Frame(self)		
+		self.style = ttk.Style()	
+		self.style.configure('TFrame', background = 'pink')
+		self.style.configure('TLabel', background = 'pink')	
+
+		container = ttk.Frame(self)		
 		container.pack(side='top', fill='both', expand = True)
 		container.grid_rowconfigure(0, weight=1)
 		container.grid_columnconfigure(0, weight=1)
-		
+														
+
 		self.frames = {}
 		
 		for F in (StartPage, PageOne, PageTwo, PageThree, PageFour):
 		
 			frame = F(container, self)
-			self.frames[F] = frame			
+			self.frames[F] = frame		
+			self.style1 = ttk.Style()
+			self.style1.configure('TButton', background = 'green')
+			frame.configure(background = 'red')
 			frame.grid (row=0, column = 0, sticky = 'nsew')
 		
 		self.show_frame(StartPage)
@@ -43,34 +51,29 @@ class UFC(tk.Tk):
 		
 		frame = self.frames[cont]
 		frame.tkraise()
-
 		
-
 class StartPage(ttk.Frame):
 	
 	def __init__(self, parent, controller):
-
-		self.style = ttk.Style()
-		self.style.configure('TLabel', background= 'green', forground='pink')	
-
 		tk.Frame.__init__(self, parent)
-		label = ttk.Label(self, text='start page', font = LARGE_FONT, style='TLabel')
+
+		label = ttk.Label(self, text='start page', font = LARGE_FONT)
 		label.pack(pady=10, padx=10)
 		
-		button1 = tk.Button(self, text = '>', command = lambda: controller.show_frame(PageOne))
+		button1 = ttk.Button(self, text = '>', command = lambda: controller.show_frame(PageOne))
 		button1.pack(side='right')
 		
-		button2 = tk.Button(self, text = '<', command = lambda: controller.show_frame(PageThree))
+		button2 = tk.Button(self, text = '<',background = 'yellow', command = lambda: controller.show_frame(PageThree))
 		button2.pack(side='left')
 
-class PageOne(tk.Frame):
+class PageOne(ttk.Frame):
 	
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		label = tk.Label(self, text='page unos', font = LARGE_FONT, bg = 'pink')
+		label = tk.Label(self, text='page unos', font = LARGE_FONT)
 		label.pack(pady=10, padx=10)
 		
-		button1 = tk.Button(self, text = '>', command = lambda: controller.show_frame(PageTwo), bg = 'pink')
+		button1 = tk.Button(self, text = '>', command = lambda: controller.show_frame(PageTwo))
 		button1.pack(side='right')
 		
 		button2 = tk.Button(self, text = '<', command = lambda: controller.show_frame(StartPage))
@@ -143,7 +146,7 @@ class PageFour(tk.Frame):
 		toolbar = NavigationToolbar2TkAgg(canvas, self)
 		toolbar.update()
 		canvas._tkcanvas.pack(side = tk.TOP, fill = tk.BOTH, expand = True)
-		
+
 app = UFC()
 while True:
     try:
@@ -151,3 +154,27 @@ while True:
         break
     except UnicodeDecodeError:
         pass
+
+
+# class Application(tk.Frame):
+#     def __init__(self, master=None):
+#         super().__init__(master)
+#         self.pack()
+#         self.create_widgets()
+
+#     def create_widgets(self):
+#         self.hi_there = tk.Button(self)
+#         self.hi_there["text"] = "Hello World\n(click me)"
+#         self.hi_there["command"] = self.say_hi
+#         self.hi_there.pack(side="top")
+
+#         self.quit = tk.Button(self, text="QUIT", fg="red",
+#                               command=root.destroy)
+#         self.quit.pack(side="bottom")
+
+#     def say_hi(self):
+#         print("hi there, everyone!")
+
+# root = tk.Tk()
+# app = Application(master=root)
+# app.mainloop()
