@@ -6,7 +6,7 @@ y = np.random.rand(15)
 names = np.array(list("ABCDEFGHIJKLMNO"))
 c = np.random.randint(1,5,size=15)
 
-norm = plt.Normalize(1,4)
+norm = plt.Normalize(1,1)
 cmap = plt.cm.RdYlGn
 
 fig,ax = plt.subplots()
