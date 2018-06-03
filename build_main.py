@@ -6,7 +6,7 @@ import re
 import threading
 import queue
 import grequests 
-"""
+
 chrome = webdriver.Chrome('/Users/armandcroitoru/Downloads/chromedriver')
 chrome.get('https://wwww.triburile.ro')
 
@@ -21,49 +21,27 @@ usr.send_keys('iggprt')
 pas.send_keys('ElilasCC')
 but.click()
 
-time.sleep(1)
-but2 = []
-while but2 == []:
-	but2 = chrome.find_element_by_link_text('Lumea 63')
-
+time.sleep(2)
+but2 = chrome.find_element_by_link_text('Lumea 64')
+but2 = chrome.find_element_by_xpath('//*[@id="home"]/div[3]/div[3]/div[10]/div[3]/div[2]/div[1]/a[2]/span')
 but2.click()
-"""
+time.sleep(2)
 
-links = []
+but = chrome.find_element_by_link_text('Piaţa centrală')
+but.click()
+time.sleep(1)
 
-index = 0
+lanc = chrome.find_element_by_id('unit_input_spear')
+lanc.send_keys(4)
+coord = chrome.find_element_by_xpath('//*[@id="place_target"]/input')
+coord.send_keys('585|517')
 
-def get_coord(source):
-	global index
-	index += 1
-	pattern = re.compile(r'[\d]+\|[\d]+')
-	results = pattern.findall(source)
-	if  results != []:
-		return results[0]
-	else:
-		return str(index)
+but = chrome.find_element_by_xpath('//*[@id="target_attack"]')
+but.click()
 
-start = time.time()
-
-for i in range(1,246):
-	link = 'http://ro.twstats.com/ro63/index.php?page=village&id=' + str(i)
-	links.append(link)
-
-i = 0
-for link in links:
-	req = requests.get(link)
-	print (get_coord(req.text) + " " + str(index))
-print (time.time() - start)
-index = 0
-results = grequests.map((grequests.get(link) for link in links))
+time.sleep(2)
+but = chrome.find_element_by_xpath('//*[@id="command-data-form"]')
+but.click()
 
 
 
-results = [result.text for result in results if result != None]
-
-results = [get_coord(result) for result in results]
-for r in results:
-	print (r)
-print (len(results))
-
-print (time.time() - start)

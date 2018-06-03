@@ -35,9 +35,9 @@ colors = [village['color'] for village in villages]
 points = [village['points'] for village in villages]
 
 fig,ax = plt.subplots()
-sc = plt.scatter(xs,ys,c=colors, s=points, norm=norm, marker= 'p')
+sc = plt.scatter(xs,ys,c=colors, s=points, norm=norm,)
 
-annot = ax.annotate("", xy=(0,0), xytext=(20,20),textcoords="offset points",
+annot = ax.annotate("", xy=(1,0), xytext=(20,20),textcoords="offset points",
                     bbox=dict(boxstyle="round", fc="w"),
                     arrowprops=dict(arrowstyle="->"))
 annot.set_visible(False)
