@@ -21,7 +21,7 @@ usr.send_keys('iggprt')
 pas.send_keys('ElilasCC')
 but.click()
 
-time.sleep(2)
+time.sleep(1)
 but2 = chrome.find_element_by_link_text('Lumea 64')
 but2 = chrome.find_element_by_xpath('//*[@id="home"]/div[3]/div[3]/div[10]/div[3]/div[2]/div[1]/a[2]/span')
 but2.click()
@@ -32,7 +32,7 @@ but.click()
 time.sleep(1)
 
 lanc = chrome.find_element_by_id('unit_input_spear')
-lanc.send_keys(4)
+lanc.send_keys(1)
 coord = chrome.find_element_by_xpath('//*[@id="place_target"]/input')
 coord.send_keys('585|517')
 
@@ -40,8 +40,24 @@ but = chrome.find_element_by_xpath('//*[@id="target_attack"]')
 but.click()
 
 time.sleep(2)
-but = chrome.find_element_by_xpath('//*[@id="command-data-form"]')
-but.click()
 
+# if but != []:
+# 	but.click()
+# else:
+# 	print ("nu merge")
+
+but  = chrome.find_element_by_xpath('//*[@id="troop_confirm_go"]')
+if but != []:
+	but.click()
+else:
+	print ("nu merge 1")
+time.sleep(2)
+but  = chrome.find_element_by_xpath('//*[@id="troop_confirm_go"]')
+if but != []:
+	but.click()
+else:
+	print ("nu merge 2")
+
+timee.sleep()
 
 
