@@ -35,4 +35,7 @@ def update():
 			})
 	conn.commit()
 	
-
+def get_villages():
+	c.execute("""SELECT * from villages""")
+	table = c.fetchall()
+	return table

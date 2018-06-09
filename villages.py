@@ -32,7 +32,7 @@ TW_sql.create_tables()
 # 	else: 
 # 		print (i)
 
-TW_sql.update()
+TW_sql.get_villages()
 
 
 
