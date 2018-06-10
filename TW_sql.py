@@ -34,8 +34,9 @@ def update():
 			'id': row[0]
 			})
 	conn.commit()
-	
+
 def get_villages():
 	c.execute("""SELECT * from villages""")
 	table = c.fetchall()
+	table = [line for line in table if line[7]>1000]
 	return table
