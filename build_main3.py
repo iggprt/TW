@@ -19,10 +19,8 @@ v = TW_sql.get_villages()
 x = [x[2] for x in v]
 y = [y[3] for y in v]
 p = [p[7] for p in v]
-size = [points/3 for points in p]
 
-fig,ax = plt.subplots()
-sc = plt.scatter(x,y,color = 'r')
+
 
 
 #matplotlib.use('TkAgg')
@@ -158,6 +156,10 @@ class PageFour(tk.Frame):
 		canvas = FigureCanvasTkAgg(f, self)
 		canvas.show()
 		canvas.get_tk_widget().pack(side = tk.TOP, fill = tk.BOTH, expand = True)
+
+		fig,ax = plt.subplots()
+
+sc = plt.scatter(x,y,color = 'r', size = 100)
 
 		toolbar = NavigationToolbar2TkAgg(canvas, self)
 		toolbar.update()
