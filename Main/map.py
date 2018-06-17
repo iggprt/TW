@@ -4,6 +4,8 @@ import map_sql
 #########  configs ########
 SIZES = [10,40,70,120]  #pixel sizes for villages
 
+'https://matplotlib.org/users/event_handling.html'
+
 class Map():
 
 	def _init__(self):
