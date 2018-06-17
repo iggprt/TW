@@ -4,6 +4,7 @@ import random
 import sqlite3
 import TW_sql
 import matplotlib.ticker as ticker
+from matplotlib.widgets import Button
 
 v = TW_sql.get_villages()
 
@@ -11,43 +12,51 @@ v = TW_sql.get_villages()
 x = [x[2] for x in v]
 y = [y[3] for y in v]
 p = [p[7] for p in v]
-size = [points/3 for points in p]
-id = [i[0] for i in v]
-for vil in v:
-    print (vil)
+owner = [o[4] for o in v]
+tribe = [line[5] for line in v]
+dist = [line[8] for line in v]
 
-names = ['alfa','beta','costel','daniel','elena',
-         'fanel','ghe','horia','india','jack',
-         'kevin','leo','mama','tata','da',]
-c = np.random.randint(1,5,size=15)
-c = [1,2,3,3,5,6,0,8,9,10,11,12,13,14,15]
+size = []
+for points in p:
+    if points < 300:
+        size.append(10)
+    elif points >= 300 and points < 1000:
+        size.append(40)
+    elif points >= 1000 and points<3000:
+        size.append(70)
+    elif points >= 3000 and points < 9000:
+        size.append(120)
+    else:
+        size.append(170)
 
 norm = plt.Normalize(0,0)
-cmap = plt.cm.RdYlGn
 
 colors = ['red', 'green', 'yellow', 'blue','purple', 'black']
-people = ['me', 'you', 'him', 'her','them']
+c_map =[]
+for (vill,i) in zip(v,range(len(v))):
 
-villages = []
-for i in range(15):
-    villages.append({'id' : i,
-                     'owner' : random.choice(people),
-                     'x' : random.randint(0,20),
-                     'y' : random.randint(0,20),
-                     'color' : random.choice(colors),
-                     'points' : random.randint(100,1200)})
-for v in villages:
-    print (str(v))
-ids = [village['id'] for village in villages]
-owners = [village['owner'] for village in villages]
-xs = [village['x'] for village in villages]
-ys = [village['y'] for village in villages]
-colors = [village['color'] for village in villages]
-points = [village['points'] for village in villages]
+    if vill[4] == 'iggprt' or vill[4] == 'eX0D1' or vill[4] == 'Nicusimo' or vill[4] == 'dina grameni' or vill[4] == 'juliannn':
+        c_map.append('yellow')
+        
+    elif vill[4] == 'Vă dău fum':
+        c_map.append('red')
+
+    elif vill[5] ==  'Roma' or vill[5] ==  'R II' or vill[5] ==  'R III' or vill[5] ==  'R IV':
+        c_map.append('pink')
+
+    elif vill[5] ==  'killer' or vill[5] ==  'Kill1' or vill[5] ==  'Kill2' or vill[5] ==  'Kill3' or vill[5] ==  'Kill4':
+        c_map.append('g')
+
+    elif vill[5] == '=SN4=' or vill[5] == '=SN3=' or vill[5] == '=SN2=' or vill[5] == '=SN=' or vill[5] == '=SN5=':
+        c_map.append('#00FFFF')
+
+    else:
+        c_map.append('#A4A4A4')
+
 
 fig,ax = plt.subplots()
-sc = plt.scatter(x,y,c=colors, s=100)
-
+sc = plt.scatter(x,y,c=c_map, s=size, norm= norm)
+# print (v)
 annot = ax.annotate("", xy=(1,0), xytext=(20,20),textcoords="offset points",
                     bbox=dict(boxstyle="round", fc="w"),
                     arrowprops=dict(arrowstyle="->"))
@@ -57,13 +66,13 @@ def update_annot(ind):
     # print (plt.gca(projection='polar'))
     pos = sc.get_offsets()[ind["ind"][0]]
     annot.xy = pos
-    text = "{}, {}\n {} ".format(" ".join(list(map(str,ind["ind"]))),
-                            ind['ind'],
-                           ind["ind"])
+    d = dist[ind['ind'][0]]
+    text = "{}: {}\n {} \n{}  {}".format(owner[ind['ind'][0]], p[ind['ind'][0]],
+                           tribe[ind['ind'][0]], dist[ind['ind'][0]], ('%.1f' %((d*22)/60)))
     annot.set_text(text)
-    annot.get_bbox_patch().set_facecolor('red')
-    annot.get_bbox_patch().set_alpha(0.7)
-    print (ax.get_ylim())
+    annot.get_bbox_patch().set_facecolor(c_map[ind['ind'][0]])
+    annot.get_bbox_patch().set_alpha(0.9)
+    # print (ax.get_ylim())
 
 
 def hover(event):
@@ -78,17 +87,39 @@ def hover(event):
             if vis:
                 annot.set_visible(False)
                 fig.canvas.draw_idle()
+    #print (plt.xlim)
 
 fig.canvas.mpl_connect("motion_notify_event", hover)
+#ticks = [t*5 for t in range(int(1000/100))]
+
+# plt.connect('button_press_event',yolo)
+# axprev = plt.axes([0.7, 0.05, 0.1, 0.075])
+# but = Button(axprev,"da")
+# but.on_clicked(yolo)
+
 # plt.axis(550,560,450,470)
-plt.xlim(580,590)
-plt.ylim(510,520)
 
-# plt.rc('grid', linestyle="--", color='y')
 
-# ax.xaxis().set_major_locator(ticker.MultipleLocator(5))
-# plt.xticks(np.arange(580 , 590,5.0))
-# plt.axes().set_aspect('equal')
+#plt.grid('grid', linestyle="--", color='y')
+
+# ax.xaxis.set_major_locator(ticks)
+# plt.yticks(ticks)
+#plt.xticks(ticks)
+plt.minorticks_on()
+
+# ax.set_xticks(ticks)
+# ax.set_yticks(ticks)
+
+
 plt.grid()
+# plt.grid.minorticks_on()
+
+
+# ax.xaxis.grid.ticks(500)
+plt.ylim(500,520)
+plt.xlim(570,590)
 plt.gca().invert_yaxis()
+# plt.axes().set_aspect('equal')
+# splt.grid()
+
 plt.show()

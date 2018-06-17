@@ -43,3 +43,4 @@ def get_villages():
 	table = c.fetchall()
 	table = [line for line in table if line[4] != 'None']
 	return table
+ 	
