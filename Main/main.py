@@ -1,5 +1,7 @@
 
 import tkinter as tk
+import map
+import farm_comp
 
 from matplotlib import style
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
@@ -39,7 +41,7 @@ class TW(tk.Tk):
 class StartPage(tk.Frame):
 	""" misc """
 	def __init__(self, parent, controller):
-		tk.Frame.__init__(self, parent)
+		tk.Frame.__init__(self, parent, width = 500, height = 500)
 
 		label = tk.Label(self, text='start page')
 		label.pack(pady=10, padx=10)
@@ -49,9 +51,19 @@ class StartPage(tk.Frame):
 
 		button2 = tk.Button(self, text = '<', command = lambda: controller.show_frame(PageOne))
 		button2.pack(side='left')
+
+		m = map.Map
+		button = tk.Button(self, text = 'map', command = m)
+		button.pack(side = 'top')
 class PageOne(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent, width = 500, height = 500)
+
+		fr =  tk.Frame(self)
+		but = tk.Button(fr, text = 'da')
+		but.pack()
+		fr.pack()
+
 
 # class PageOne(tk.Frame):
 
@@ -89,5 +101,3 @@ while True:
         break
     except UnicodeDecodeError:
         pass
-
-

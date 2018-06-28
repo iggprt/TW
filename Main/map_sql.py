@@ -6,11 +6,11 @@ conn.text_factory = str
 c = conn.cursor()
 
 def create_tables():
-	c.execute("""CREATE TABLE IF NOT EXISTS villages 
+	c.execute("""CREATE TABLE IF NOT EXISTS villages
 		(v_id primary key, name, x INTEGER, y INTEGER, owner, tribe, continent, points INTEGER, distance)""")
 
 def append_village(v_id=0, name="na", x=0, y=0, owner='na', tribe='na', continent='na', points=0, distance=1000):
-	c.execute("""INSERT INTO villages(v_id, name,x,y,owner,tribe,continent,points, distance) 
+	c.execute("""INSERT INTO villages(v_id, name,x,y,owner,tribe,continent,points, distance)
 				VALUES (:v_id, :name, :x, :y, :owner, :tribe, :continent, :points, :distance)""",{
 		'v_id': v_id,
 		'name': name,
@@ -41,6 +41,5 @@ def update():
 def get_villages():
 	c.execute("""SELECT * from villages""")
 	table = c.fetchall()
-	table = [line for line in table if line[4] != 'None']
+	table = [line for line in table if line[8] <= 20 ]
 	return table
- 	

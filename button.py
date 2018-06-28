@@ -1,62 +1,63 @@
+import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.widgets import Slider, Button, RadioButtons
-# from matplotlib.backends.backend_wxagg import NavigationToolbar2Wx 
-from matplotlib.backend_tools import ToolBase, ToolToggleBase
 
-class MyCustomToolbar(ToolBase): 
-    ON_CUSTOM_LEFT  = wx.NewId()
-    ON_CUSTOM_RIGHT = wx.NewId()
+class DraggableRectangle:
+    def __init__(self, rect):
+        self.rect = rect
+        self.press = None
 
-    def __init__(self, plotCanvas):
-        # create the default toolbar
-        NavigationToolbar2Wx.__init__(self, plotCanvas)
-        # add new toolbar buttons 
-        self.AddSimpleTool(self.ON_CUSTOM_LEFT, _load_bitmap('stock_left.xpm'),
-                           'Pan to the left', 'Pan graph to the left')
-        wx.EVT_TOOL(self, self.ON_CUSTOM_LEFT, self._on_custom_pan_left)
-        self.AddSimpleTool(self.ON_CUSTOM_RIGHT, _load_bitmap('stock_right.xpm'),
-                           'Pan to the right', 'Pan graph to the right')
-        wx.EVT_TOOL(self, self.ON_CUSTOM_RIGHT, self._on_custom_pan_right)
+    def connect(self):
+        'connect to all the events we need'
+        self.cidpress = self.rect.figure.canvas.mpl_connect(
+            'button_press_event', self.on_press)
+        self.cidrelease = self.rect.figure.canvas.mpl_connect(
+            'button_release_event', self.on_release)
+        self.cidmotion = self.rect.figure.canvas.mpl_connect(
+            'motion_notify_event', self.on_motion)
 
-    # pan the graph to the left
-    def _on_custom_pan_left(self, evt):
-        ONE_SCREEN = 1
-        axes = self.canvas.figure.axes[0]
-        x1,x2 = axes.get_xlim()
-        ONE_SCREEN = x2 - x1
-        axes.set_xlim(x1 - ONE_SCREEN, x2 - ONE_SCREEN)
-        self.canvas.draw()
+    def on_press(self, event):
+        'on button press we will see if the mouse is over us and store some data'
+        if event.inaxes != self.rect.axes: return
 
-    # pan the graph to the right
-    def _on_custom_pan_right(self, evt):
-        ONE_SCREEN = 1
-        axes = self.canvas.figure.axes[0]
-        x1,x2 = axes.get_xlim()
-        ONE_SCREEN = x2 - x1
-        axes.set_xlim(x1 + ONE_SCREEN, x2 + ONE_SCREEN)
-        self.canvas.draw()
+        contains, attrd = self.rect.contains(event)
+        if not contains: return
+        print('event contains', self.rect.xy)
+        x0, y0 = self.rect.xy
+        self.press = x0, y0, event.xdata, event.ydata
+
+    def on_motion(self, event):
+        'on motion we will move the rect if the mouse is over us'
+        if self.press is None: return
+        if event.inaxes != self.rect.axes: return
+        x0, y0, xpress, ypress = self.press
+        dx = event.xdata - xpress
+        dy = event.ydata - ypress
+        #print('x0=%f, xpress=%f, event.xdata=%f, dx=%f, x0+dx=%f' %
+        #      (x0, xpress, event.xdata, dx, x0+dx))
+        self.rect.set_x(x0+dx)
+        self.rect.set_y(y0+dy)
+
+        self.rect.figure.canvas.draw()
+
+
+    def on_release(self, event):
+        'on release we reset the press data'
+        self.press = None
+        self.rect.figure.canvas.draw()
+
+    def disconnect(self):
+        'disconnect all the stored connection ids'
+        self.rect.figure.canvas.mpl_disconnect(self.cidpress)
+        self.rect.figure.canvas.mpl_disconnect(self.cidrelease)
+        self.rect.figure.canvas.mpl_disconnect(self.cidmotion)
 
 fig = plt.figure()
-# plotting
-X=[1,2,3]
-Y=[10,20,30]
-ax  = fig.add_subplot(1, 1, 1)
-ax.plot(X,Y,'bo-')
-ax.grid()
-ax.legend()
-X1=[]
-Y1=[]
+ax = fig.add_subplot(111)
+rects = ax.bar(range(10), 20*np.random.rand(10))
+drs = []
+for rect in rects:
+    dr = DraggableRectangle(rect)
+    dr.connect()
+    drs.append(dr)
 
-def on_press(event):
-    print( "canvas clicked")
-    print ("how can I tell whether the button is clicked?")
-    print( event)
-def on_button_clicked(event):
-    print ("button clicked")
-    print( event)
-axnext = plt.axes([0.9, 0.00, 0.1, 0.075])
-bnext = Button(axnext, 'Next')
-bnext.on_clicked(on_button_clicked)
-# fig.canvas.mpl_connect('button_press_event', on_press)
 plt.show()
-
