@@ -1,7 +1,12 @@
-
+from sys import platform as sys_pf
+if sys_pf == 'darwin':
+    import matplotlib
+    matplotlib.use("TkAgg")
 import tkinter as tk
 import map
 import farm_comp
+
+
 
 from matplotlib import style
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
@@ -31,6 +36,7 @@ class TW(tk.Tk):
 			self.frames[F] = frame
 			frame.grid (row=0, column = 0, sticky = 'nsew')
 
+
 		self.show_frame(StartPage)
 
 	def show_frame(self, cont):
@@ -41,7 +47,10 @@ class TW(tk.Tk):
 class StartPage(tk.Frame):
 	""" misc """
 	def __init__(self, parent, controller):
-		tk.Frame.__init__(self, parent, width = 500, height = 500)
+		tk.Frame.__init__(self, parent)
+
+		self.height = 5000
+		self.width  = 500
 
 		label = tk.Label(self, text='start page')
 		label.pack(pady=10, padx=10)
@@ -55,9 +64,14 @@ class StartPage(tk.Frame):
 		m = map.Map
 		button = tk.Button(self, text = 'map', command = m)
 		button.pack(side = 'top')
+
+		listbox = tk.Listbox(self, height = 5)
+		elem = (1,2,23,4)
+		listbox.insert('end' , elem)
+		listbox.pack()
 class PageOne(tk.Frame):
 	def __init__(self, parent, controller):
-		tk.Frame.__init__(self, parent, width = 500, height = 500)
+		tk.Frame.__init__(self, parent)
 
 		fr =  tk.Frame(self)
 		but = tk.Button(fr, text = 'da')
