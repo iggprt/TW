@@ -33,8 +33,8 @@ class farming():
 		x = vill[:vill.find('|')]
 		y = vill[vill.find('|') + 1 : ]
 
-		lanc = self.chrome.find_element_by_id('unit_input_axe')
-		lanc.send_keys(10)
+		lanc = self.chrome.find_element_by_id('unit_input_light')
+		lanc.send_keys(3)
 		v = self.chrome.find_element_by_xpath('//*[@id="place_target"]/input')
 		v.send_keys(str(x) + str(y))
 		but = self.chrome.find_element_by_xpath('//*[@id="target_attack"]')
@@ -50,18 +50,23 @@ class farming():
 
 	def rec_attack(self):
 		f = open('villages.txt', 'r')
-		for v in f:
-			try:
-				frame = self.chrome.find_element_by_xpath('//iframe[contains(@src, "recaptcha")]')
-				self.chrome.switch_to.frame(frame)
-				x = self.chrome.find_element_by_xpath("//*[@id='recaptcha-anchor']")
-				self.chrome.switch_to.default_content()
-			except selenium.common.exceptions.NoSuchElementException:
-				x = None
+		# for v in f:
+		# 	try:
+		# 		frame = self.chrome.find_element_by_xpath('//iframe[contains(@src, "recaptcha")]')
+		# 		self.chrome.switch_to.frame(frame)
+		# 		x = self.chrome.find_element_by_xpath("//*[@id='recaptcha-anchor']")
+		# 		self.chrome.switch_to.default_content()
+		# 	except selenium.common.exceptions.NoSuchElementException:
+		# 		x = None
 
-			print (x)
+		# 	print (x)
 
-			self.attack(v)
+		#   self.attack(v)
+
+		self.attack('588|512')
+
+
+		threading.Timer(10, self.rec_attack).start()
 
 
 f = farming()

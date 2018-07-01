@@ -41,5 +41,5 @@ def update():
 def get_villages():
 	c.execute("""SELECT * from villages""")
 	table = c.fetchall()
-	table = [line for line in table if line[8]]
+	table = [line for line in table if line[8] < 50]
 	return table

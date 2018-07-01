@@ -4,7 +4,7 @@ if sys_pf == 'darwin':
     matplotlib.use("TkAgg")
 import tkinter as tk
 import map
-import farm_comp
+# import farm_comp
 
 
 
