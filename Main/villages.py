@@ -2,7 +2,7 @@ import sqlite3
 import requests
 import time
 from bs4 import BeautifulSoup
-import TW_sql
+import map_sql
 import math
 
 
@@ -11,8 +11,8 @@ home_link = "http://ro.twstats.com/ro64/index.php?page=village&id="
 source = ''
 start = time.time()
 
-TW_sql.create_tables()
-for i in range(0,20000):
+map_sql.create_tables()
+for i in range(4128,20000):
 	source = requests.get(home_link + str(i)).text 
 	source = source[source.find('Nume:'):source.find('Istoria satului')]
 
@@ -36,12 +36,12 @@ for i in range(0,20000):
 		distance = ((x-588)**2 + (y-513)**2)**(1./2)
 		distance = float('%.2f' % distance)
 
-		TW_sql.append_village(v_id = i, name=matches[0], x=x, y=y, owner=matches[4], tribe=matches[5], continent= matches[2], points=points, distance = distance)
+		map_sql.append_village(v_id = i, name=matches[0], x=x, y=y, owner=matches[4], tribe=matches[5], continent= matches[2], points=points, distance = distance)
 	else: 
 		if i%30 == 0:
 			print (i)
 
-TW_sql.get_villages()
+# map_sql.get_villages()
 
 
 
