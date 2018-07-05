@@ -50,23 +50,22 @@ class farming():
 
 	def rec_attack(self):
 		f = open('villages.txt', 'r')
-		# for v in f:
-		# 	try:
-		# 		frame = self.chrome.find_element_by_xpath('//iframe[contains(@src, "recaptcha")]')
-		# 		self.chrome.switch_to.frame(frame)
-		# 		x = self.chrome.find_element_by_xpath("//*[@id='recaptcha-anchor']")
-		# 		self.chrome.switch_to.default_content()
-		# 	except selenium.common.exceptions.NoSuchElementException:
-		# 		x = None
+		for v in f:
+			try:
+				frame = self.chrome.find_element_by_xpath('//iframe[contains(@src, "recaptcha")]')
+				self.chrome.switch_to.frame(frame)
+				x = self.chrome.find_element_by_xpath("//*[@id='recaptcha-anchor']")
+				self.chrome.switch_to.default_content()
+			except selenium.common.exceptions.NoSuchElementException:
+				x = None
 
-		# 	print (x)
+			print (x)
+			self.attack(v)
 
-		#   self.attack(v)
-
-		self.attack('588|512')
+		#self.attack('588|512')
 
 
-		threading.Timer(10, self.rec_attack).start()
+		#threading.Timer(10, self.rec_attack).start()
 
 
 f = farming()
