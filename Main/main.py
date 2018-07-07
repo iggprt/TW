@@ -69,14 +69,29 @@ class StartPage(tk.Frame):
 		elem = (1,2,23,4)
 		listbox.insert('end' , elem)
 		listbox.pack()
-class PageOne(tk.Frame):
-	def __init__(self, parent, controller):
-		tk.Frame.__init__(self, parent)
 
-		fr =  tk.Frame(self)
-		but = tk.Button(fr, text = 'da')
-		but.pack()
-		fr.pack()
+
+
+class PageOne(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        fr =  tk.Frame(self)
+        but = tk.Button(fr, text = 'da')
+        but.pack()
+        fr.pack()
+
+        # frame1`_ = tk.Frame(self)
+        s = tk.Scrollbar(fr)
+        fr2 = tk.Frame(fr, yscrollcommand = s.set)
+
+        s.pack(side = 'right', fill = "y")
+        for i in range(100):
+            l = tk.Label(fr2, text=str(i))
+            l.pack(side = 'bottom')
+        fr.pack(side = 'bottom' )
+        s.config (command = fr2.yview)
+
 
 
 # class PageOne(tk.Frame):

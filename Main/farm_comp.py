@@ -1,5 +1,5 @@
 import tkinter as tk
-import threading 
+import threading
 from selenium import webdriver
 import time
 
@@ -11,7 +11,8 @@ import selenium
 
 class farming():
 	def __init__(self):
-		self.chrome = webdriver.Chrome('/Users/armandcroitoru/Downloads/chromedriver')
+		# self.chrome = webdriver.Chrome('/Users/armandcroitoru/Downloads/chromedriver')
+		self.chrome = webdriver.Chrome('/home/elilas/Downloads/chromedriver')
 		self.chrome.get('https://wwww.triburile.ro')
 		usr = self.chrome.find_element_by_id('user')
 		pas = self.chrome.find_element_by_id('password')
@@ -19,7 +20,7 @@ class farming():
 		usr.send_keys('iggprt')
 		pas.send_keys('ElilasCC')
 		but.click()
-		
+
 		# from selenium.webdriver.support import expected_conditions as EC
 
 		# wait = WebDriverWait(self.chrome, 10)
@@ -39,7 +40,7 @@ class farming():
 		v.send_keys(str(x) + str(y))
 		but = self.chrome.find_element_by_xpath('//*[@id="target_attack"]')
 		but.click()
-		
+
 		# from selenium.webdriver.support import expected_conditions as EC
 
 		wait = WebDriverWait(self.chrome, 10)
