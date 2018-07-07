@@ -12,7 +12,7 @@ source = ''
 start = time.time()
 
 map_sql.create_tables()
-for i in range(4128,20000):
+for i in range(1012, 200000):
 	source = requests.get(home_link + str(i)).text 
 	source = source[source.find('Nume:'):source.find('Istoria satului')]
 

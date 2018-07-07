@@ -38,23 +38,17 @@ class Map():
 
 		for vill in self.table:
 
-		    if vill[4] == 'iggprt' or vill[4] == 'eX0D1' or vill[4] == 'Nicusimo' or vill[4] == 'dina grameni' or vill[4] == 'juliannn':
+		    if vill[4] == 'iggprt' or vill[4] == 'Nicusimo':
 		        self.c_map.append('yellow')
-
-		    elif vill[4] == 'Vă dău fum':
-		        self.c_map.append('red')
 
 		    elif vill[5] ==  'Roma' or vill[5] ==  'R II' or vill[5] ==  'R III' or vill[5] ==  'R IV':
 		        self.c_map.append('pink')
-
-		    elif vill[5] ==  'killer' or vill[5] ==  'Kill1' or vill[5] ==  'Kill2' or vill[5] ==  'Kill3' or vill[5] ==  'Kill4':
-		        self.c_map.append('g')
 
 		    elif vill[5] == '=SN4=' or vill[5] == '=SN3=' or vill[5] == '=SN2=' or vill[5] == '=SN=' or vill[5] == '=SN5=':
 		        self.c_map.append('#00FFFF')
 
 		    else:
-		        self.c_map.append('#A4A4A4')
+		        self.c_map.append('#6E6E6E')
 		self.fig, self.ax = plt.subplots()
 		self.connect()
 		self.sc = plt.scatter(self.x,self.y,c=self.c_map, s=self.size)
