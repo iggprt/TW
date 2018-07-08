@@ -81,47 +81,7 @@ class PageOne(tk.Frame):
         but.pack()
         fr.pack()
 
-        # frame1`_ = tk.Frame(self)
-        s = tk.Scrollbar(fr)
-        fr2 = tk.Frame(fr, yscrollcommand = s.set)
 
-        s.pack(side = 'right', fill = "y")
-        for i in range(100):
-            l = tk.Label(fr2, text=str(i))
-            l.pack(side = 'bottom')
-        fr.pack(side = 'bottom' )
-        s.config (command = fr2.yview)
-
-
-
-# class PageOne(tk.Frame):
-
-# 	def __init__(self, parent, controller):
-# 		tk.Frame.__init__(self, parent)
-# 		label = tk.Label(self, text='page graph')
-# 		label.pack(pady=10, padx=10)
-
-# 		button1 = tk.Button(self, text = '>', command = lambda: controller.show_frame(StartPage))
-# 		button1.pack(side='right')
-
-# 		button2 = tk.Button(self, text = '<', command = lambda: controller.show_frame(StartPage))
-# 		button2.pack(side='left')
-
-# 		f = Figure(figsize = (5,5), dpi = 100)
-# 		a = f.add_subplot(111)
-# 		a.scatter([1,2,3],[2,8,6])
-
-# 		canvas = FigureCanvasTkAgg(f, self)
-# 		canvas.show()
-# 		canvas.get_tk_widget().pack(side = tk.TOP, fill = tk.BOTH, expand = True)
-
-# 		fig,ax = plt.subplots()
-
-# 		sc = plt.scatter(x,y,color = 'r', size = 100)
-
-# 		toolbar = NavigationToolbar2TkAgg(canvas, self)
-# 		toolbar.update()
-# 		canvas._tkcanvas.pack(side = tk.TOP, fill = tk.BOTH, expand = True)
 
 app = TW()
 while True:

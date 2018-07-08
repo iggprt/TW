@@ -68,6 +68,9 @@ class farming():
 
 		#threading.Timer(10, self.rec_attack).start()
 
+	def attack_rec(self):
+		
+
 
 f = farming()
 f.rec_attack()
